@@ -10,6 +10,33 @@ document.addEventListener("DOMContentLoaded", () => {
   const questionTypeSelect = document.getElementById("questionTypeSelect");
   const questionTypeInput = document.getElementById("questionTypeInput");
 
+  // 从本地存储加载上次使用的分类
+  function loadLastUsedCategories() {
+    const lastUsed = JSON.parse(localStorage.getItem('lastUsedCategories')) || {};
+    
+    if (lastUsed.subject) {
+      subjectInput.value = lastUsed.subject;
+      subjectSelect.value = "";
+    }
+    if (lastUsed.chapter) {
+      chapterInput.value = lastUsed.chapter;
+      chapterSelect.value = "";
+    }
+    if (lastUsed.questionType) {
+      questionTypeInput.value = lastUsed.questionType;
+      questionTypeSelect.value = "";
+    }
+  }
+
+  // 保存当前使用的分类到本地存储
+  function saveLastUsedCategories(subject, chapter, questionType) {
+    localStorage.setItem('lastUsedCategories', JSON.stringify({
+      subject,
+      chapter,
+      questionType
+    }));
+  }
+
   async function loadCategories() {
     try {
       const response = await fetch("/api/categories");
@@ -54,6 +81,9 @@ document.addEventListener("DOMContentLoaded", () => {
       subjectInput.addEventListener("input", () => subjectSelect.value = "");
       chapterInput.addEventListener("input", () => chapterSelect.value = "");
       questionTypeInput.addEventListener("input", () => questionTypeSelect.value = "");
+
+      // 加载上次使用的分类
+      loadLastUsedCategories();
     } catch (error) {
       console.error("加载分类失败:", error);
     }
@@ -85,7 +115,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (response.ok) {
         showMessage("题目添加成功！", "success");
-        form.reset();
+        // 保存当前使用的分类
+        saveLastUsedCategories(question.subject, question.chapter, question.questionType);
+        // 只重置题目和答案字段，保留分类
+        termInput.value = "";
+        definitionInput.value = "";
         termInput.focus();
       } else {
         const error = await response.json();
