@@ -95,7 +95,11 @@ app.post("/api/questions", (req, res) => {
   writeQuestions(questions);
 
   // 更新分类
-  updateCategories({ subjects: subject, chapters: chapter, questionTypes: questionType });
+  updateCategories({
+    subjects: subject,
+    chapters: chapter,
+    questionTypes: questionType,
+  });
 
   res.json({ success: true });
 });
@@ -115,6 +119,36 @@ app.get("/api/questions/random", (req, res) => {
 
   const randomIndex = Math.floor(Math.random() * questions.length);
   res.json(questions[randomIndex]);
+});
+
+// 获取分页问题
+app.get("/api/questions/paged", (req, res) => {
+  const { subject, chapter, type, page = 1 } = req.query;
+  let questions = readQuestions();
+
+  // 应用筛选
+  if (subject) questions = questions.filter((q) => q.subject === subject);
+  if (chapter) questions = questions.filter((q) => q.chapter === chapter);
+  if (type) questions = questions.filter((q) => q.questionType === type);
+
+  // 分页处理
+  const pageSize = 10;
+  const totalPages = Math.ceil(questions.length / pageSize);
+  const startIndex = (page - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+  const pagedQuestions = questions.slice(startIndex, endIndex);
+
+  res.json({
+    questions: pagedQuestions,
+    total: questions.length,
+    page: parseInt(page),
+    totalPages,
+  });
+});
+
+// 在前端路由部分添加
+app.get("/browse", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "browse.html"));
 });
 
 // 前端路由

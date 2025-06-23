@@ -1,69 +1,74 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-CN">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>添加题目</title>
-  <link rel="stylesheet" href="/css/style.css" />
-</head>
-<body>
-  <div class="container">
-    <h1>添加题目</h1>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>添加题目</title>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>添加题目</h1>
 
-    <form id="addQuestionForm">
-      <div class="form-group">
-        <label for="term">题目:</label>
-        <input type="text" id="term" required />
-      </div>
-
-      <div class="form-group">
-        <label for="definition">答案:</label>
-        <textarea id="definition" required></textarea>
-      </div>
-
-      <div class="form-group">
-        <label for="subject">科目:</label>
-        <div class="combo-box">
-          <select id="subjectSelect">
-            <option value="">选择或输入新科目</option>
-          </select>
-          <input type="text" id="subjectInput" placeholder="或输入新科目" />
+      <form id="addQuestionForm">
+        <div class="form-group">
+          <label for="term">题目:</label>
+          <input type="text" id="term" required />
         </div>
-      </div>
 
-      <div class="form-group">
-        <label for="chapter">章节:</label>
-        <div class="combo-box">
-          <select id="chapterSelect">
-            <option value="">选择或输入新章节</option>
-          </select>
-          <input type="text" id="chapterInput" placeholder="或输入新章节" />
+        <div class="form-group">
+          <label for="definition">答案:</label>
+          <textarea id="definition" required></textarea>
         </div>
-      </div>
 
-      <div class="form-group">
-        <label for="questionType">题型:</label>
-        <div class="combo-box">
-          <select id="questionTypeSelect">
-            <option value="">选择或输入新题型</option>
-          </select>
-          <input type="text" id="questionTypeInput" placeholder="或输入新题型" />
+        <div class="form-group">
+          <label for="subject">科目:</label>
+          <div class="combo-box">
+            <select id="subjectSelect">
+              <option value="">选择或输入新科目</option>
+            </select>
+            <input type="text" id="subjectInput" placeholder="或输入新科目" />
+          </div>
         </div>
+
+        <div class="form-group">
+          <label for="chapter">章节:</label>
+          <div class="combo-box">
+            <select id="chapterSelect">
+              <option value="">选择或输入新章节</option>
+            </select>
+            <input type="text" id="chapterInput" placeholder="或输入新章节" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="questionType">题型:</label>
+          <div class="combo-box">
+            <select id="questionTypeSelect">
+              <option value="">选择或输入新题型</option>
+            </select>
+            <input
+              type="text"
+              id="questionTypeInput"
+              placeholder="或输入新题型"
+            />
+          </div>
+        </div>
+
+        <div class="button-group">
+          <button type="submit">添加</button>
+          <button type="reset">重置</button>
+        </div>
+      </form>
+
+      <div id="message" class="message"></div>
+
+      <div class="nav">
+        <a href="/">返回练习</a>
+        <a href="/browse">浏览题目</a>
       </div>
-
-      <div class="button-group">
-        <button type="submit">添加</button>
-        <button type="reset">重置</button>
-      </div>
-    </form>
-
-    <div id="message" class="message"></div>
-
-    <div class="nav">
-      <a href="/">返回练习</a>
     </div>
-  </div>
 
-  <script src="/js/add.js"></script>
-</body>
+    <script src="/js/add.js"></script>
+  </body>
 </html>
